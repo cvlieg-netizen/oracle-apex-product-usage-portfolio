@@ -12,8 +12,7 @@
 
 - Product Usage
 - GitHub Code
-- Screenshots
-- Video Demo
+- Screenshots and Documentation
 
 ## Date Created
 
@@ -21,8 +20,8 @@ YYYY-MM-DD
 
 ## Summary
 
-Describe the contribution in 3-5 sentences. Make the Oracle product usage
-explicit.
+Write a short, practical summary. Explain the Oracle product usage in plain
+language and describe why the work is useful.
 
 ## What I Built
 
@@ -32,7 +31,7 @@ explicit.
 
 ## Technical Architecture
 
-Explain the main components, for example:
+Explain the main pieces involved, for example:
 
 - APEX page or component
 - Database table or view
@@ -44,10 +43,10 @@ Explain the main components, for example:
 ## Evidence
 
 - Screenshot: `screenshots/...`
-- Video: link or filename
 - SQL example: `sql/...`
 - PL/SQL example: `plsql/...`
 - APEX configuration notes: `apex/...`
+- Documentation: `docs/...`
 
 ## What I Learned
 
@@ -70,4 +69,3 @@ Evidence submitted:
 
 What I learned:
 ```
-
