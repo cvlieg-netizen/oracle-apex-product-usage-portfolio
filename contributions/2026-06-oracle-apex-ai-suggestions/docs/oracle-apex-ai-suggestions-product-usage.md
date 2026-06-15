@@ -3,7 +3,7 @@
 ## Objective
 
 This document explains a practical Oracle APEX integration that displays
-AI-assisted operational suggestions inside ERP dashboards and workflow pages.
+AI-assisted operational suggestions inside ERP dashboards.
 
 The important part is not the AI engine by itself. The important part is how
 Oracle APEX and Oracle Database turn the recommendation into a controlled,
@@ -56,7 +56,7 @@ screen.
 - The payload is built by PL/SQL after applying ERP filters.
 - APEX shows only active alerts visible to the current user.
 - AI suggestions do not execute transactions.
-- Final decisions remain inside the normal ERP workflow.
+- Final decisions remain inside the normal ERP process.
 
 ## Screenshot Evidence
 

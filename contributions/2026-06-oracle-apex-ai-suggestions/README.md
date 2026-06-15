@@ -1,4 +1,4 @@
-# Oracle APEX AI Suggestions for ERP Workflows
+# Oracle APEX ERP Dashboard AI Suggestions
 
 ## Oracle Products Used
 
@@ -23,10 +23,10 @@ June 2026
 
 ## Summary
 
-This contribution documents a practical Oracle APEX use case: showing
-AI-assisted operational suggestions inside ERP dashboards and workflow pages.
-The user sees a simple suggestion card in APEX, but behind it there is a full
-Oracle stack: database rules, PL/SQL, scheduler processing, and a reusable CLOB
+This contribution documents a practical Oracle APEX dashboard use case: showing
+AI-assisted operational suggestions directly inside an ERP dashboard. The user
+sees compact suggestion cards in APEX, but behind them there is a full Oracle
+stack: database rules, PL/SQL, scheduler processing, and a reusable CLOB
 rendering pattern for Dynamic Content regions.
 
 The external AI service is only used to help write the recommendation text.
@@ -103,8 +103,8 @@ tokens, or complete proprietary business logic.
 Product used: Oracle APEX, Oracle Database, PL/SQL, SQLcl and ORDS.
 
 This GitHub repository documents hands-on Oracle APEX product usage through an
-ERP workflow that displays AI-assisted operational suggestions. Oracle APEX is
-used as the application and user experience layer, while Oracle Database and
+ERP dashboard that displays AI-assisted operational suggestions. Oracle APEX is
+used as the dashboard and user experience layer, while Oracle Database and
 PL/SQL provide the alert lifecycle, security filters, background processing and
 CLOB-based Dynamic Content rendering.
 

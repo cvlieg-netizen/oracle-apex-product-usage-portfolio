@@ -12,7 +12,7 @@ what was built, why it matters, and what Oracle product features were used.
 
 | Date | Contribution | Oracle products | Evidence |
 | --- | --- | --- | --- |
-| 2026-06 | [Oracle APEX AI Suggestions for ERP Workflows](contributions/2026-06-oracle-apex-ai-suggestions/README.md) | Oracle APEX, Oracle Database, PL/SQL, SQLcl, ORDS | Documentation, screenshots, SQL examples, PL/SQL examples, APEX notes |
+| 2026-06 | [Oracle APEX ERP Dashboard AI Suggestions](contributions/2026-06-oracle-apex-ai-suggestions/README.md) | Oracle APEX, Oracle Database, PL/SQL, SQLcl, ORDS | Documentation, screenshots, SQL examples, PL/SQL examples, APEX notes |
 
 ## Repository Structure
 
