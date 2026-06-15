@@ -28,7 +28,7 @@ RETURN app_ia_alertas_pq.dashboard_sugerencias_clob(
 - `GLOBAL_CIA`: tenant
 - `GLOBAL_CENTRO`: operating company or branch context
 - `APP_USER`: current user
-- `GLOBAL_ACTUAL_WF`: workflow context when used in workflow pages
+- `GLOBAL_ACTUAL_WF`: optional ERP process context when the dashboard is filtered by an active workflow
 
 ## Empty State
 
