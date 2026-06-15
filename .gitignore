@@ -1,0 +1,15 @@
+.DS_Store
+.env
+.env.*
+*.log
+*.tmp
+node_modules/
+dist/
+build/
+
+# Do not publish private captures or raw recordings by accident.
+private/
+raw-screenshots/
+raw-videos/
+credentials/
+
