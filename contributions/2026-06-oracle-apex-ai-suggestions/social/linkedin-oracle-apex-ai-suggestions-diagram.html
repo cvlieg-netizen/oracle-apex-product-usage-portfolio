@@ -1,0 +1,563 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Oracle APEX - Panel ERP con Sugerencias IA</title>
+  <style>
+    :root {
+      --ink: #142033;
+      --muted: #5f6f85;
+      --line: #d9e2ec;
+      --panel: #ffffff;
+      --soft: #f5f8fb;
+      --apex: #1f6feb;
+      --teal: #1aa99a;
+      --orange: #f59e0b;
+      --navy: #17345c;
+      --green: #17a66a;
+      --danger: #dc7c2c;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      display: grid;
+      place-items: center;
+      background: #dfe7ef;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      color: var(--ink);
+    }
+
+    .artboard {
+      width: 1600px;
+      height: 900px;
+      overflow: hidden;
+      position: relative;
+      background:
+        radial-gradient(circle at 83% 8%, rgba(31, 111, 235, .10), transparent 25%),
+        linear-gradient(180deg, #ffffff 0%, #f4f8fc 100%);
+      border: 1px solid #cbd5e1;
+      box-shadow: 0 28px 90px rgba(15, 23, 42, .22);
+    }
+
+    .topbar {
+      height: 152px;
+      padding: 34px 56px 26px;
+      background: linear-gradient(135deg, #0f2340 0%, #17345c 58%, #1f4f80 100%);
+      color: #fff;
+      display: grid;
+      grid-template-columns: 1fr auto;
+      align-items: center;
+      gap: 32px;
+    }
+
+    .kicker {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 10px;
+      color: #bfe6ff;
+      font-size: 18px;
+      font-weight: 800;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+    }
+
+    .kicker::before {
+      content: "";
+      width: 42px;
+      height: 8px;
+      border-radius: 99px;
+      background: var(--teal);
+      display: inline-block;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: 58px;
+      line-height: 1;
+      letter-spacing: 0;
+      font-weight: 900;
+    }
+
+    .subtitle {
+      margin: 10px 0 0;
+      font-size: 26px;
+      line-height: 1.24;
+      color: #dbeafe;
+      max-width: 960px;
+      font-weight: 500;
+    }
+
+    .ace-badge {
+      align-self: start;
+      display: grid;
+      gap: 8px;
+      min-width: 270px;
+      padding: 18px 20px;
+      border: 1px solid rgba(255,255,255,.22);
+      border-radius: 18px;
+      background: rgba(255,255,255,.10);
+      box-shadow: inset 0 1px 0 rgba(255,255,255,.14);
+    }
+
+    .ace-badge span:first-child {
+      color: #bfe6ff;
+      font-size: 16px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: .08em;
+    }
+
+    .ace-badge span:last-child {
+      color: #fff;
+      font-size: 24px;
+      font-weight: 850;
+    }
+
+    .content {
+      height: 678px;
+      padding: 42px 56px 34px;
+      display: grid;
+      grid-template-columns: 560px 1fr;
+      gap: 38px;
+    }
+
+    .panel {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 22px;
+      box-shadow: 0 18px 45px rgba(15, 23, 42, .10);
+    }
+
+    .flow {
+      padding: 30px;
+      position: relative;
+    }
+
+    .section-title {
+      margin: 0 0 6px;
+      font-size: 30px;
+      line-height: 1.12;
+      font-weight: 900;
+      letter-spacing: 0;
+    }
+
+    .section-copy {
+      margin: 0 0 24px;
+      color: var(--muted);
+      font-size: 19px;
+      line-height: 1.35;
+      max-width: 470px;
+    }
+
+    .steps {
+      display: grid;
+      gap: 14px;
+      position: relative;
+    }
+
+    .steps::before {
+      content: "";
+      position: absolute;
+      left: 27px;
+      top: 38px;
+      bottom: 38px;
+      width: 4px;
+      border-radius: 99px;
+      background: #d7e5f4;
+    }
+
+    .step {
+      display: grid;
+      grid-template-columns: 58px 1fr;
+      gap: 16px;
+      align-items: center;
+      padding: 15px 16px 15px 0;
+      min-height: 82px;
+      position: relative;
+    }
+
+    .num {
+      width: 58px;
+      height: 58px;
+      display: grid;
+      place-items: center;
+      border-radius: 18px;
+      color: #fff;
+      font-size: 23px;
+      font-weight: 900;
+      position: relative;
+      z-index: 1;
+      box-shadow: 0 10px 22px rgba(15, 23, 42, .16);
+    }
+
+    .step:nth-child(1) .num { background: var(--apex); }
+    .step:nth-child(2) .num { background: var(--teal); }
+    .step:nth-child(3) .num { background: var(--orange); }
+    .step:nth-child(4) .num { background: #8b5cf6; }
+    .step:nth-child(5) .num { background: var(--green); }
+
+    .step h3 {
+      margin: 0 0 4px;
+      font-size: 22px;
+      line-height: 1.1;
+      font-weight: 900;
+      letter-spacing: 0;
+    }
+
+    .step p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 17px;
+      line-height: 1.28;
+      max-width: 390px;
+    }
+
+    .dashboard {
+      display: grid;
+      grid-template-rows: auto 1fr auto;
+      overflow: hidden;
+    }
+
+    .windowbar {
+      height: 56px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 24px;
+      border-bottom: 1px solid var(--line);
+      background: #f8fafc;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 13px;
+      font-size: 20px;
+      font-weight: 900;
+      color: var(--navy);
+    }
+
+    .logo {
+      width: 36px;
+      height: 36px;
+      border-radius: 10px;
+      display: grid;
+      place-items: center;
+      color: #fff;
+      font-size: 21px;
+      font-weight: 900;
+      background: linear-gradient(135deg, #1f6feb, #1aa99a);
+    }
+
+    .navchips {
+      display: flex;
+      gap: 10px;
+      color: #63748a;
+      font-size: 15px;
+      font-weight: 760;
+    }
+
+    .navchips span {
+      padding: 7px 12px;
+      border-radius: 999px;
+      background: #edf3f8;
+    }
+
+    .dash-body {
+      padding: 30px;
+    }
+
+    .dash-head {
+      display: flex;
+      align-items: start;
+      justify-content: space-between;
+      gap: 28px;
+      margin-bottom: 22px;
+    }
+
+    .dash-head h2 {
+      margin: 0 0 8px;
+      font-size: 34px;
+      line-height: 1.05;
+      font-weight: 950;
+      letter-spacing: 0;
+    }
+
+    .dash-head p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 18px;
+      line-height: 1.35;
+      max-width: 620px;
+    }
+
+    .ia-pill {
+      flex: 0 0 auto;
+      padding: 12px 16px;
+      border-radius: 999px;
+      background: #e7f8f4;
+      color: #08796f;
+      font-size: 19px;
+      font-weight: 950;
+      border: 1px solid #bdebe3;
+    }
+
+    .suggestions {
+      display: grid;
+      gap: 15px;
+    }
+
+    .suggestion {
+      display: grid;
+      grid-template-columns: 62px 1fr auto;
+      gap: 16px;
+      align-items: center;
+      min-height: 108px;
+      padding: 18px;
+      border: 1px solid #dbe4ef;
+      border-radius: 18px;
+      background: #fff;
+      box-shadow: 0 10px 28px rgba(15, 23, 42, .06);
+      border-left: 8px solid var(--danger);
+    }
+
+    .suggestion:nth-child(2) { border-left-color: var(--orange); }
+    .suggestion:nth-child(3) { border-left-color: var(--teal); }
+
+    .icon {
+      width: 54px;
+      height: 54px;
+      display: grid;
+      place-items: center;
+      border-radius: 16px;
+      background: #effaf7;
+      color: #0f766e;
+      font-size: 27px;
+      font-weight: 900;
+    }
+
+    .suggestion h3 {
+      margin: 0 0 6px;
+      font-size: 23px;
+      line-height: 1.12;
+      font-weight: 940;
+      letter-spacing: 0;
+    }
+
+    .suggestion p {
+      margin: 0;
+      color: #53647a;
+      font-size: 17px;
+      line-height: 1.28;
+      max-width: 610px;
+    }
+
+    .meta {
+      display: grid;
+      justify-items: end;
+      gap: 10px;
+      min-width: 142px;
+    }
+
+    .severity {
+      padding: 7px 13px;
+      border-radius: 999px;
+      background: #fff1e5;
+      color: #a14f13;
+      font-size: 16px;
+      font-weight: 900;
+    }
+
+    .button {
+      padding: 11px 18px;
+      border-radius: 12px;
+      background: var(--navy);
+      color: #fff;
+      font-size: 17px;
+      font-weight: 900;
+      white-space: nowrap;
+    }
+
+    .dashboard-footer {
+      border-top: 1px solid var(--line);
+      padding: 18px 30px;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 14px;
+      background: #f8fafc;
+    }
+
+    .metric {
+      min-height: 74px;
+      padding: 14px;
+      border-radius: 16px;
+      background: #fff;
+      border: 1px solid #e1e8f0;
+    }
+
+    .metric strong {
+      display: block;
+      font-size: 24px;
+      line-height: 1;
+      color: var(--navy);
+      margin-bottom: 6px;
+    }
+
+    .metric span {
+      display: block;
+      color: #66778d;
+      font-size: 14px;
+      line-height: 1.22;
+      font-weight: 740;
+    }
+
+    .bottom-note {
+      position: absolute;
+      left: 56px;
+      right: 56px;
+      bottom: 18px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      color: #687b91;
+      font-size: 16px;
+      font-weight: 720;
+    }
+
+    .stack {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+    }
+
+    .stack span {
+      padding: 7px 12px;
+      border-radius: 999px;
+      background: #eaf1f8;
+      color: #26445f;
+      border: 1px solid #d5e2ee;
+    }
+  </style>
+</head>
+<body>
+  <main class="artboard" aria-label="Diagrama de desarrollo de sugerencias IA en panel ERP Oracle APEX">
+    <header class="topbar">
+      <div>
+        <div class="kicker">Oracle APEX + ERP</div>
+        <h1>Panel ERP con Sugerencias IA</h1>
+        <p class="subtitle">Una contribución de uso real: Oracle APEX renderiza recomendaciones operativas generadas desde datos, reglas SQL y procesos PL/SQL.</p>
+      </div>
+      <aside class="ace-badge">
+        <span>Uso de Producto</span>
+        <span>Aprendiz ACE</span>
+      </aside>
+    </header>
+
+    <section class="content">
+      <article class="panel flow">
+        <h2 class="section-title">Flujo del desarrollo</h2>
+        <p class="section-copy">La IA ayuda a redactar sugerencias. La decisión, el contexto y la ejecución permanecen dentro del ERP.</p>
+
+        <div class="steps">
+          <div class="step">
+            <div class="num">1</div>
+            <div>
+              <h3>Datos del ERP</h3>
+              <p>Inventario, saldos, mínimos, bodegas y movimientos operativos.</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="num">2</div>
+            <div>
+              <h3>Reglas SQL / PL/SQL</h3>
+              <p>Se detectan alertas por tenant, centro y reglas configurables.</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="num">3</div>
+            <div>
+              <h3>Proceso programado</h3>
+              <p>DBMS_SCHEDULER procesa recomendaciones fuera de la carga de página.</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="num">4</div>
+            <div>
+              <h3>IA local / Ollama</h3>
+              <p>Redacta texto sugerido. No ejecuta transacciones del ERP.</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="num">5</div>
+            <div>
+              <h3>Oracle APEX</h3>
+              <p>Muestra tarjetas accionables dentro del panel operativo.</p>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <article class="panel dashboard">
+        <div class="windowbar">
+          <div class="brand"><span class="logo">V</span> VLIM Inventario</div>
+          <div class="navchips"><span>Panel</span><span>Inventario</span><span>IA</span></div>
+        </div>
+
+        <div class="dash-body">
+          <div class="dash-head">
+            <div>
+              <h2>Sugerencias IA de Inventario</h2>
+              <p>Recomendaciones priorizadas para revisar stock, disponibilidad y acciones operativas.</p>
+            </div>
+            <div class="ia-pill">IA</div>
+          </div>
+
+          <div class="suggestions">
+            <div class="suggestion">
+              <div class="icon">!</div>
+              <div>
+                <h3>Stock bajo detectado</h3>
+                <p>Artículo con existencia menor al mínimo definido para la bodega seleccionada.</p>
+              </div>
+              <div class="meta"><span class="severity">Alta</span><span class="button">Revisar</span></div>
+            </div>
+            <div class="suggestion">
+              <div class="icon">↻</div>
+              <div>
+                <h3>Reposición recomendada</h3>
+                <p>La sugerencia propone reponer o trasladar inventario antes de afectar el servicio.</p>
+              </div>
+              <div class="meta"><span class="severity">Media</span><span class="button">Revisar</span></div>
+            </div>
+            <div class="suggestion">
+              <div class="icon">✓</div>
+              <div>
+                <h3>Acción operativa lista</h3>
+                <p>El usuario valida la recomendación desde APEX antes de continuar el proceso.</p>
+              </div>
+              <div class="meta"><span class="severity">Baja</span><span class="button">Revisar</span></div>
+            </div>
+          </div>
+        </div>
+
+        <footer class="dashboard-footer">
+          <div class="metric"><strong>APEX</strong><span>Experiencia visual y accionable</span></div>
+          <div class="metric"><strong>SQL</strong><span>Reglas con contexto de negocio</span></div>
+          <div class="metric"><strong>PL/SQL</strong><span>Procesamiento reutilizable</span></div>
+          <div class="metric"><strong>IA</strong><span>Texto sugerido, no transaccional</span></div>
+        </footer>
+      </article>
+    </section>
+
+    <div class="bottom-note">
+      <div>Carlos Vlieg | Portafolio de Uso de Oracle APEX</div>
+      <div class="stack"><span>Oracle APEX</span><span>Base de Datos Oracle</span><span>PL/SQL</span><span>Ollama</span></div>
+    </div>
+  </main>
+</body>
+</html>
